@@ -271,13 +271,21 @@ void setup() {
   Serial.begin(9600);
   Serial.println("<Arduino is ready>");
 
-
-  updateAllFeet();
-
-  delay(3000);
-
   attachServos();
-
+  delay(1000);  // Give servos time to initialize
+  
+  // Initialize to a known safe position (e.g., standing)
+  for (int i = 0; i < 4; i++) {
+    posExpect[i][0] = DEFAULT_X;
+    posExpect[i][1] = DEFAULT_Y;
+    posExpect[i][2] = STAND_Z;
+    posNow[i][0] = DEFAULT_X;
+    posNow[i][1] = DEFAULT_Y;
+    posNow[i][2] = STAND_Z;
+  }
+  
+  updateAllFeet();
+  
   updateWalkPos();
 
   pinMode(A0, INPUT_PULLUP);
