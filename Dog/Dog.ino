@@ -299,6 +299,8 @@ void setup() {
 int CommandNum;
 int oldCommandNum = 100;
 
+
+//checks for commands and runs the movement function that is specified
 void loop() {
   getCmd();
 
@@ -745,6 +747,7 @@ void updateAllFeet() {
 
 // check if a foot should be reversed
 // just for convenience to write stuff in loops
+//returns true for footNum 1 3 and false for 0 2 
 bool isReverse(int footNum) {
   return footNum % 2 != 0;
 }
@@ -779,6 +782,7 @@ int angToMS(double ang) {
 // Converts from degree to Miliseconds that correpond to real life angle for servos
 // Needs to further converted with offsets and multipliers for specific servos
 // ang: setpoint in degrees
+// avoiding small changes large changes over necessary
 int angToSer(double ang) {
   int ms = round(ang / MAX_ANGLE * 2000) + 500;
   if (ms < 500) ms = 500;
