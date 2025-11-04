@@ -80,6 +80,8 @@ bool isStanding = false;
 // unit in cm
 double walkPos[8][3];
 
+
+//some kind of walking position order??? seems to have stand_z and subtract a walk_z height. add and divide to simulate the circle movements
 void updateWalkPos() {
   walkPos[0][0] = DEFAULT_X;
   walkPos[0][1] = DEFAULT_Y;
