@@ -698,7 +698,7 @@ void resetToStand() {
 
 // set the desired position of a Foot, in given miliseconds
 // Breaks the whole length into 20 equal length and moves one time each time called
-// called in the WaitAllReach
+// called in the all walking functions
 void setFootPos(int footNum, double x, double y, double z, double time) {
   float length_x = 0, length_y = 0, length_z = 0;
 
@@ -725,6 +725,7 @@ void setFootPos(int footNum, double x, double y, double z, double time) {
 
 
 // update and turn all the feet to commanded position
+//ran in waitReach() 
 void updateAllFeet() {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 3; j++) {
@@ -734,7 +735,7 @@ void updateAllFeet() {
         posNow[i][j] = posExpect[i][j];
       }
     }
-    IK(i, posNow[i][0], posNow[i][1], posNow[i][2], isReverse(i));
+    IK(i, posNow[i][0], posNow[i][1], posNow[i][2], isReverse(i)); // ONLY UPDATES MOVEMENT FOR ONE FOOT
 
     for (int j = 0; j < 3; j++) {
       turnServo(servos[i][j], angMap[i][j] * multipliers[i][j] + offsets[i][j], isReverse(i));
@@ -758,6 +759,7 @@ void waitReach(int leg) {
   }
 }
 
+//runs all four legs each for updating the feet
 void waitAllReach() {
   for (int i = 0; i < 4; i++)
     waitReach(i);
@@ -788,6 +790,7 @@ int angToSer(double ang) {
 // If servo is mounted in the opposite direction from desired, inverse the motor
 // ang: setpoint in degrees
 // inverse: if a servo needs to be inversed
+// ran in updateAllFeet()
 void turnServo(Servo s, double ang, boolean inverse) {
   if (inverse) {
     ang = MAX_ANGLE - ang;
@@ -798,6 +801,7 @@ void turnServo(Servo s, double ang, boolean inverse) {
 
 // Inverse Kinematics
 // Offsets for adjusting the 0 position of the tip of the feet to match its real world default position
+// math in video. converts to degrees from radian. puts in angMap array
 void IK(int footNum, double x, double y, double z, bool inverse) {
   x += X_OFFSET;
   y += Y_OFFSET;
@@ -836,6 +840,7 @@ void attachServos() {
 }
 
 // getting command from serial moniter
+// ran in loop()
 void getCmd() {
   // if (Serial.available() > 0 && (cmd == "" || cmd == "walk")) {
   if (Serial.available() > 0) {
