@@ -7,6 +7,7 @@ String state = "";
 
 // servo config constants -------------------------------------
 Servo servos[4][3];
+//0 and 2 are left legs, 1 and 3 are right legs (front left, front right, back left, back right)
 const int servo_pin[4][3] = { { 2, 3, 4 }, { 5, 6, 7 }, { 8, 9, 10 }, { 11, 12, 13 } };
 const double tolerance = 0.001;
 
@@ -568,7 +569,7 @@ void loop() {
   }
 }
 
-
+// turns on the standing function (can run other walking/sidestep/etc)
 void stand() {
   setFootPos(0, DEFAULT_X, 0, STAND_Z, 500);
   setFootPos(1, DEFAULT_X, 0, STAND_Z, 500);
@@ -578,6 +579,7 @@ void stand() {
   isStanding = true;
 }
 
+//turns off the standing function (has to stand before running other functions)
 void sit() {
   setFootPos(0, 0, 0, 0, 1000);
   setFootPos(1, 0, 0, 0, 1000);
@@ -587,6 +589,7 @@ void sit() {
   isStanding = false;
 }
 
+//forward non-q walking, based on # of steps (2 cyclical motions per step I think)
 void walk(int steps) {
   for (int i = 1; i <= 8 * steps; i++) {
     setFootPos(3, walkPos[i % 8][0], walkPos[i % 8][1], walkPos[i % 8][2], 100);
