@@ -58,14 +58,18 @@ const double shinL = 10.75;
 
 // IK constants ---------------------------------------
 // unit in cm
+// offsets from the hip location
 const double X_OFFSET = 0;
 const double Y_OFFSET = 6.75;
 const double Z_OFFSET = 0.5;
 
 // walking constants -------------------------------
 // unit in cm
+
+// height of standing position off ground (used in math)
 double STAND_Z = 13;
 
+// box constants for the walking cycle
 double DEFAULT_X = 0;
 double DEFAULT_Y = 0;
 double WALK_X = 0 + 3;  // 2
